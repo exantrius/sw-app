@@ -5,13 +5,17 @@ import { filter, map, switchMap, catchError } from 'rxjs/operators';
 import Character from '@app/model/character';
 
 import {StarwarsPeopleService} from './starwars_people_service';
-import {StarwarsPropleData} from './starwars_people_data';
+import {StarwarsPeopleData} from './starwars_people_data';
 
 /** Implementation of starwars people data service. */
 @Injectable()
-export class StarwarsPeopleDataImpl implements StarwarsPropleData {
+export class StarwarsPeopleDataImpl implements StarwarsPeopleData {
 
-  private characters: Character[] = [];
+  private characters: Character[] = [{
+    name: 'test',
+    birth_year: '1Y',
+    gender: 'male'
+  }];
 
   private readonly refreshSubject = new Subject<void>();
   private readonly filterByGenderSubject = new Subject<string>();
@@ -23,7 +27,7 @@ export class StarwarsPeopleDataImpl implements StarwarsPropleData {
   private readonly subscription: Subscription;
 
   get data(): Character[] {
-    return this.data;
+    return this.characters;
   }
 
   constructor(private readonly starwarsPeopleService: StarwarsPeopleService) {}

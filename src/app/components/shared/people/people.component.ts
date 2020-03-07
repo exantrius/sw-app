@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import Character from '@app/model/character';
 
 /** Starwars people cart component. */
 @Component({
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent {
+
+  @Input() character!: Character;
+
 }

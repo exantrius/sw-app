@@ -1,7 +1,7 @@
 import Character from '@app/model/character';
 
 /** Service provides a single data source and manipulate with the data. */
-export abstract class StarwarsPropleData {
+export abstract class StarwarsPeopleData {
 
   /** Readonly data collection. */
   abstract get data(): Character[];

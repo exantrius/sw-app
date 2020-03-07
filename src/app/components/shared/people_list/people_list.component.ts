@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import Character from '@app/model/character';
 
 /** List of starwars people carts component. */
 @Component({
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./people_list.component.scss'],
 })
 export class PeopleListComponent {
+
+  @Input() characters: Character[];
 }

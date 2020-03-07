@@ -6,8 +6,12 @@ import { map, catchError } from 'rxjs/operators';
 import Character from '@app/model/character';
 import {StarwarsPeopleService} from './starwars_people_service';
 
+interface Result {
+  results: Character[];
+}
+
 /** external api url. */
-const SERVICE_URL = 'https://swapi.co/api/people/';
+const SERVICE_URL = 'https://swapi.co/api/people';
 
 /** Implementation of Starwars people service. */
 @Injectable()
@@ -16,10 +20,13 @@ export class StarwarsPeopleServiceImpl implements StarwarsPeopleService {
   constructor(private readonly httpClient: HttpClient) {}
 
   getPersons(): Observable<Character[]> {
-    return this.httpClient.get<{results: Character[]}>(SERVICE_URL)
-      .pipe(
-        map((r: {results: Character[]}) => r.results)
-      );
+    return this.httpClient.get<Result>(SERVICE_URL)
+      .pipe(map((r: Result) => r.results));
+  }
+
+  searchPersons(name: string): Observable<Character[]> {
+    return this.httpClient.get<Result>(`${SERVICE_URL}?search=${name}`)
+      .pipe(map((r: Result) => r.results));
   }
 
 }

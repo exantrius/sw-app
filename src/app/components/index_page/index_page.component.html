@@ -1,4 +1,10 @@
 <div>
-  <app-filter-people></app-filter-people>
+  <app-filter-people
+      [searchString]="starwarsPeopleData.search"
+      [genderList]="starwarsPeopleData.getGenderList()"
+      [selectedGender]="starwarsPeopleData.filterByGender"
+      (genderFilter)="genderFilter($event)"
+      (search)="search($event)"
+      (resetFilter)="resetFilter()"></app-filter-people>
   <app-people-list [characters]="starwarsPeopleData.data"></app-people-list>
 </div>

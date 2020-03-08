@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { filter, map, switchMap, catchError } from 'rxjs/operators';
+import { Observable, Subject, Subscription, merge } from 'rxjs';
+import { filter, map, switchMap, catchError, tap } from 'rxjs/operators';
 
 import Character from '@app/model/character';
 
@@ -11,15 +11,8 @@ import {StarwarsPeopleData} from './starwars_people_data';
 @Injectable()
 export class StarwarsPeopleDataImpl implements StarwarsPeopleData {
 
-  // Testing;
-  private characters: Character[] = [
-    { name: 'test', birth_year: '1Y', gender: 'male'},
-    { name: 'test2', birth_year: '2Y', gender: 'male'},
-    { name: 'test3', birth_year: '2Y', gender: 'male'},
-    { name: 'test', birth_year: '1Y', gender: 'male'},
-    { name: 'test2', birth_year: '2Y', gender: 'male'},
-    { name: 'test3', birth_year: '2Y', gender: 'male'},
-];
+  private lastFetchedCharacters: Character[] = [];
+  private characters: Character[] = [];
 
   private readonly refreshSubject = new Subject<void>();
   private readonly filterByGenderSubject = new Subject<string>();
@@ -34,14 +27,45 @@ export class StarwarsPeopleDataImpl implements StarwarsPeopleData {
     return this.characters;
   }
 
-  constructor(private readonly starwarsPeopleService: StarwarsPeopleService) {}
+  constructor(private readonly starwarsPeopleService: StarwarsPeopleService) {
+
+    this.subscription = merge(
+        this.starwarsPeopleService.getPersons(),
+        this.refreshSubject.pipe(
+          switchMap(() => this.starwarsPeopleService.getPersons())),
+        this.searchSubject.pipe(
+          switchMap(name => this.starwarsPeopleService.searchPersons(name))
+        ),
+        this.filterByGenderSubject.pipe(
+          map(() => this.lastFetchedCharacters)
+        )
+      )
+      .pipe(
+        tap(characters => {
+          this.lastFetchedCharacters = characters;
+          return characters;
+        }),
+        map(characters => {
+          return !!this.filterByGenderString
+            ? characters.filter(character => character.gender === this.filterByGenderString)
+            : characters;
+        })
+      )
+      .subscribe(characters => {
+        this.characters = characters;
+      });
+
+  }
 
   refresh(): void {
+    this.filterByGenderString = '';
+    this.searchString = '';
+
     this.refreshSubject.next();
   }
 
   getGenderList(): string[] {
-    return [];
+    return [... new Set(this.lastFetchedCharacters.map(entry => entry.gender))].sort();
   }
 
   set filterByGender(gender: string) {

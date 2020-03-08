@@ -11,13 +11,21 @@ import Character from '@app/model/character';
 })
 export class IndexPageComponent implements OnDestroy {
 
-  peopleData: Character[];
-
-  constructor(readonly starwarsPeopleData: StarwarsPeopleData) {
-    console.log(starwarsPeopleData.data);
-  }
+  constructor(readonly starwarsPeopleData: StarwarsPeopleData) {}
 
   ngOnDestroy(): void {
     this.starwarsPeopleData.dispose();
+  }
+
+  genderFilter(gender: string): void {
+    this.starwarsPeopleData.filterByGender = gender;
+  }
+
+  search(name: string): void {
+    this.starwarsPeopleData.search = name;
+  }
+
+  resetFilter() {
+    this.starwarsPeopleData.refresh();
   }
 }

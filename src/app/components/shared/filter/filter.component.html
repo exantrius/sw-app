@@ -3,7 +3,7 @@
   <mat-form-field class="search-bar">
     <mat-label>Search People</mat-label>
     <input matInput type="text" [(ngModel)]="searchString" (ngModelChange)="searchInput($event)">
-    <button mat-button *ngIf="searchString" matSuffix mat-icon-button aria-label="Clear" (click)="searchString=''">
+    <button mat-button *ngIf="searchString" matSuffix mat-icon-button aria-label="Clear" (click)="resetClick()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>

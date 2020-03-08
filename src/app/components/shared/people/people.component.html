@@ -1,5 +1,7 @@
-<div class="people-cart">
-  <div>{{ character.name }}</div>
-  <div>{{ character.birth_year }}</div>
-  <div>{{ character.gender }}</div>
-</div>
+<mat-card class="character-card">
+  <mat-card-title>{{ character.name }}</mat-card-title>
+  <mat-card-subtitle>Gender: {{ character.gender }}</mat-card-subtitle>
+  <mat-card-content>
+    <p>Birth Year: {{ character.birth_year }}</p>
+  </mat-card-content>
+</mat-card>

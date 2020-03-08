@@ -11,11 +11,15 @@ import {StarwarsPeopleData} from './starwars_people_data';
 @Injectable()
 export class StarwarsPeopleDataImpl implements StarwarsPeopleData {
 
-  private characters: Character[] = [{
-    name: 'test',
-    birth_year: '1Y',
-    gender: 'male'
-  }];
+  // Testing;
+  private characters: Character[] = [
+    { name: 'test', birth_year: '1Y', gender: 'male'},
+    { name: 'test2', birth_year: '2Y', gender: 'male'},
+    { name: 'test3', birth_year: '2Y', gender: 'male'},
+    { name: 'test', birth_year: '1Y', gender: 'male'},
+    { name: 'test2', birth_year: '2Y', gender: 'male'},
+    { name: 'test3', birth_year: '2Y', gender: 'male'},
+];
 
   private readonly refreshSubject = new Subject<void>();
   private readonly filterByGenderSubject = new Subject<string>();

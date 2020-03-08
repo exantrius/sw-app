@@ -1,3 +1,7 @@
 <div class="people-list-wrapper">
-  <app-people-cart *ngFor="let entry of characters" [character]="entry" ></app-people-cart>
+  <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let entry of characters">
+      <app-people-cart [character]="entry"></app-people-cart>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

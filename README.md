@@ -8,4 +8,4 @@ For run locally:
 
 - clone this repository
 - run `npm install`
-- run `npm start` or `ng serve`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- run `npm start` or `ng serve`. Navigate to `http://localhost:4200/`. The app will automatically open the browser window.
